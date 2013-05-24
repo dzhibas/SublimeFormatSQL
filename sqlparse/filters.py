@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import sys
 
 from os.path import abspath, join
 
@@ -111,7 +112,8 @@ class IncludeStatement(Filter):
                         f = open(path)
                         raw_sql = f.read()
                         f.close()
-                    except IOError, err:
+                    except IOError:
+                        err = sys.exc_info()[0]
                         yield Comment, u'-- IOError: %s\n' % err
 
                     else:

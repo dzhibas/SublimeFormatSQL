@@ -13,6 +13,7 @@
 # and to allow some customizations.
 
 import re
+import sys
 
 from sqlparse import tokens
 from sqlparse.keywords import KEYWORDS, KEYWORDS_COMMON
@@ -79,7 +80,8 @@ class LexerMeta(type):
 
             try:
                 rex = re.compile(tdef[0], rflags).match
-            except Exception, err:
+            except Exception:
+                err = sys.exc_info()[0]
                 raise ValueError(("uncompilable regex %r in state"
                                   " %r of %r: %s"
                                   % (tdef[0], state, cls, err)))
